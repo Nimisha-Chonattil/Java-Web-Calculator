@@ -49,6 +49,4 @@ jobs:
           ls
           cd target/
           ls
-          cd /*
-          ls
           pwd
