@@ -45,7 +45,7 @@ jobs:
         with: 
           name: calculator-artifact
           path: target/*.war
-      - run:|
+      - run: |
           ls
           cd target/
           ls
