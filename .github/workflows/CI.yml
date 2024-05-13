@@ -53,12 +53,12 @@ jobs:
          tag_name: ${{ github.ref }}
         # body_path: CHANGELOG.md
         env:
-        MY_SECRET: ${{ github.token }}
+        GITHUB_TOKEN: ${{ secrets.MY_SECRET }}
 
       - name: Upload Artifact
         uses: actions/upload-release-asset@v1
         env:
-          MY_SECRET: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.MY_SECRET }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
 
