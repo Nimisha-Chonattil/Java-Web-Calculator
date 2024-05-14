@@ -46,7 +46,7 @@ jobs:
       - name: uploading artifacts
         uses: actions/upload-artifact@v4
         with: 
-          name: calculator-artifact
+          name: calculator
           path: target/*.war
       - run: |
           ls
@@ -60,7 +60,7 @@ jobs:
       - name: Downloading artifacts
         uses: actions/download-artifact@v3
         with:
-          name: calculator-artifact
+          name: calculator
       - run: |
           ls
           pwd
