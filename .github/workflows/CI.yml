@@ -57,9 +57,23 @@ jobs:
 
 
   Upload_to_Release:
+
     needs: Build 
     runs-on: ubuntu-latest
     steps:   
+      - name: Downloading artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: calculator-artifact
+      - run: |
+          ls
+          pwd
+      - name: Archive release
+        uses: thedoctor0/zip-release@0.7.5
+        with:
+          type: 'zip'
+          filename: 'app.zip'
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -83,21 +97,9 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./app.zip
           asset_name: calculator-artifact-${{ github.run_number}}
-          asset_content_type: application/gzip
+          asset_content_type: application/zip
 
-      - name: Downloading artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: calculator-artifact
-      - run: |
-          ls
-          pwd
-      - name: Archive release
-        uses: thedoctor0/zip-release@0.7.5
-        with:
-          type: 'zip'
-          filename: 'app.zip'
-
+      
 
 
 
