@@ -57,7 +57,7 @@ jobs:
 
 
   Upload_to_Release:
-    needs: Build and Sonar
+    needs: Build 
     runs-on: ubuntu-latest
     steps:   
       - name: Create Release
