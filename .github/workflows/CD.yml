@@ -14,10 +14,13 @@ jobs:
       #     run_id: ${{ github.event.workflow_run.id }}
       #     path: ./calculator
       #     search_artifacts: true
-      - name: Download artifact
-        run: gh release download Java-Web-Calculator --pattern "calculator.war"
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Get workflow Run ID
+        id: get_workflow_id
+        run: echo "::set-output name=workflow_id::$(curl -s -H \"Authorization: Bearer ${{secrets.GITHUB_TOKEN }}\" https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs | jq -r '.workflow_run_id')" 
+      - name: Download Artifact
+        run: |
+          workflow_id="${{ steps.get_workflow_id.outputs.workflow_id }}"
+          curl -s -O -L -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "htpps://api.github.com/repos/${{ github.repository }}/actions/runs/${workflow_id}/artifacts" | jq -r '.artifacts[] | select(.name == "calculator-artifact") | .archive_download_url' | xargs -I {} curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -o artifact.zip -L "{}"
       - run: |
           ls
           cd calculator/
