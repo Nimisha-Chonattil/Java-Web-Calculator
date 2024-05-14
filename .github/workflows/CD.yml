@@ -15,7 +15,7 @@ jobs:
       #     path: ./calculator
       #     search_artifacts: true
       - name: Download artifact
-        run: gh release download JAVA-WEB-CALCULATOR --pattern "calculator.war"
+        run: gh release download Java-Web-Calculator --pattern "calculator.war"
         env:
           GH_TOKEN: ${{ github.token }}
       - run: |
