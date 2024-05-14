@@ -43,35 +43,72 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Nimisha-Chonattil_Java-Web-Calculator -Dsonar.qualitygate.wait=true
-      
+        
+      - name: uploading artifacts
+        uses: actions/upload-artifact@v4
+        with: 
+          name: calculator-artifact
+          path: target/*.war
+      - run: |
+          ls
+          cd target/
+          ls
+          pwd
+
+
+  Upload to Release:
+    needs: Build and Sonar
+    runs-on: ubuntu-latest
+    steps:   
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag_name: v${{ github.run_number }}
           draft: false
           prerelease: false
-          release_name: Release ${{ github.ref}}
-          tag_name: ${{ github.ref }}
-        # body_path: CHANGELOG.md
+          release_name: Release ${{ github.run_number}}
+          
+    
         
 
-      - name: Upload Artifact
+      - name: Upload release asset
+        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./app.zip
+          asset_name: calculator-artifact-${{ github.run_number}}
+          asset_content_type: application/gzip
 
-      # - name: uploading artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with: 
-      #     name: calculator-artifact
-      #     path: target/*.war
-      # - run: |
-      #     ls
-      #     cd target/
-      #     ls
-      #     pwd
+      - name: Downloading artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: calculator-artifact
+      - run: |
+          ls
+          pwd
+      - name: Archive release
+        uses: thedoctor0/zip-release@0.7.5
+        with:
+          type: 'zip'
+          filename: 'app.zip'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       
