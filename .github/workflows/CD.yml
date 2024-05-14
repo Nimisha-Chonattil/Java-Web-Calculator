@@ -1,19 +1,21 @@
 name: Deployment using Tomcat
-on: 
-  workflow_run:
-    workflows: Build and Sonar
-    types: [completed]
+on: workflow_dispatch
+  # workflow_run:
+  #   workflows: Build and Sonar
+  #   types: [completed]
 jobs:
   Deploy:
     name: Deployment
     runs-on: ubuntu-latest
     steps: 
-      - name: Download the build artifact from triggered workflow 
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          run_id: ${{ github.event.workflow_run.id }}
-          path: ./calculator
-          search_artifacts: true
+      # - name: Download the build artifact from triggered workflow 
+      #   uses: dawidd6/action-download-artifact@v2
+      #   with:
+      #     run_id: ${{ github.event.workflow_run.id }}
+      #     path: ./calculator
+      #     search_artifacts: true
+      - name: Download artifact
+        run: gh release download JAVA-WEB-CALCULATOR --pattern "calculator.war"
       - run: |
           ls
           cd calculator/

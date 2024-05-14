@@ -73,6 +73,9 @@ jobs:
         with:
           type: 'zip'
           filename: 'app.zip'
+      - run: |
+          ls
+          pwd
 
       - name: Create Release
         id: create_release
