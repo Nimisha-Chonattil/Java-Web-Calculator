@@ -62,12 +62,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: calculator-artifact
-          path: ./calculator
           
           
       - run: |
-          ls
-          cd calculator/
           ls
           pwd
 

@@ -38,9 +38,15 @@ jobs:
         uses: robinraju/release-downloader@v1.9
         with:
           repository: ${{ github.repository }}
-          tag: v${{ github.event.input.Release_Version }}
-          fileName: app-${{ github.event.inputs.Release_Version }}.zip
+          tag: v${{github.event.inputs.Release_Version}}
+          fileName: web-calculator-${{ github.event.inputs.Release_Version}}.zip
           extract: false
+
+      # - name: Download Release Asset
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: app-${{ github.event.inputs.Release_Version }}
+      #     path: .serverless
 
       - run: |
           unzip "app-${{github.event.inputs.Release_Version}}.zip"
@@ -55,7 +61,7 @@ jobs:
           pwd
 
       - name: Deploy to Tomcat
-        run: curl -v -u ${{secrets.TOMCAT_USR}}:${{secrets.TOMCAT_PWD}} -T /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/calculator/*.war http://54.206.111.223:8080/manager/text/deploy?path=/calculator-webapp-war  
+        run: curl -v -u ${{secrets.TOMCAT_USR}}:${{secrets.TOMCAT_PWD}} -T /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/calculator/*/*.war http://54.206.111.223:8080/manager/text/deploy?path=/calculator-webapp-war  
       # /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/target/calculator.war
 
 
