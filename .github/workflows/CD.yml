@@ -1,22 +1,22 @@
 name: Deployment using Tomcat
 on: 
-  workflow_dispatch:
-    inputs:
-      environment: 
-        description: Environment for deploy
-        required: true
-        default: Dev
-        type: choice
-        options:
-          - Dev
-          - Test
-          - Prod
-      Release_Version:
-        type: string
-        required: true
-  # workflow_run:
-  #   workflows: Build and Sonar
-  #   types: [completed]
+  # workflow_dispatch:
+  #   inputs:
+  #     environment: 
+  #       description: Environment for deploy
+  #       required: true
+  #       default: Dev
+  #       type: choice
+  #       options:
+  #         - Dev
+  #         - Test
+  #         - Prod
+  #     Release_Version:
+  #       type: string
+  #       required: true
+  workflow_run:
+    workflows: Build and Sonar
+    types: [completed]
 jobs:
   Deploy:
     name: Deployment
@@ -26,19 +26,26 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
 
-      - name: Downloading the release assets
-        uses: robinraju/release-downloader@v1.10
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
         with:
-          repository: ${{ github.repository }}
-          tag: v${{ github.event.input.Release_Version }}
-          fileName: calculator-${{ github.event.inputs.Release_Version }}.zip
-          extract: false
+          name: calculator-artifact
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: |
-          unzip "app-${{github.event.inputs.Release_Version}}.zip"
-          ls
-          pwd
-         
+      # - name: Downloading the release assets
+      #   uses: robinraju/release-downloader@v1.9
+      #   with:
+      #     repository: ${{ github.repository }}
+      #     tag: v${{ github.event.input.Release_Version }}
+      #     fileName: calculator-${{ github.event.inputs.Release_Version }}.zip
+      #     extract: false
+
+      # - run: |
+      #     unzip "app-${{github.event.inputs.Release_Version}}.zip"
+      #     ls
+      #     pwd
+        
       # - name: Download the build artifact from triggered workflow 
       #   uses: dawidd6/action-download-artifact@v2
       #   with:
