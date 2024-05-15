@@ -1,22 +1,22 @@
 name: Deployment using Tomcat
 on: 
-  # workflow_dispatch:
-  #   inputs:
-  #     environment: 
-  #       description: Environment for deploy
-  #       required: true
-  #       default: Dev
-  #       type: choice
-  #       options:
-  #         - Dev
-  #         - Test
-  #         - Prod
-  #     Release_Version:
-  #       type: string
-  #       required: true
-  workflow_run:
-    workflows: Build and Sonar
-    types: [completed]
+  workflow_dispatch:
+    inputs:
+      environment: 
+        description: Environment for deploy
+        required: true
+        default: Dev
+        type: choice
+        options:
+          - Dev
+          - Test
+          - Prod
+      Release_Version:
+        type: string
+        required: true
+  # workflow_run:
+  #   workflows: Build and Sonar
+  #   types: [completed]
 jobs:
   Deploy:
     name: Deployment
@@ -47,19 +47,6 @@ jobs:
           ls
           pwd
         
-      # - name: Download the build artifact from triggered workflow 
-      #   uses: dawidd6/action-download-artifact@v2
-      #   with:
-      #     run_id: ${{ github.event.workflow_run.id }}
-      #     path: ./calculator
-      #     search_artifacts: true
-      # - name: Get workflow Run ID
-      #   id: get_workflow_id
-      #   run: echo "::set-output name=workflow_id::$(curl -s -H \"Authorization: Bearer ${{secrets.GITHUB_TOKEN }}\" https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs | jq -r '.workflow_run_id')" 
-      # - name: Download Artifact
-      #   run: |
-      #     workflow_id="${{ steps.get_workflow_id.outputs.workflow_id }}"
-      #     curl -s -O -L -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "htpps://api.github.com/repos/${{ github.repository }}/actions/runs/${workflow_id}/artifacts" | jq -r '.artifacts[] | select(.name == "calculator-artifact") | .archive_download_url' | xargs -I {} curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -o artifact.zip -L "{}"
       - run: |
           ls
           cd calculator/
@@ -70,3 +57,11 @@ jobs:
       - name: Deploy to Tomcat
         run: curl -v -u ${{secrets.TOMCAT_USR}}:${{secrets.TOMCAT_PWD}} -T /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/calculator/*.war http://54.206.111.223:8080/manager/text/deploy?path=/calculator-webapp-war  
       # /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/target/calculator.war
+
+
+       # - name: Download the build artifact from triggered workflow 
+      #   uses: dawidd6/action-download-artifact@v2
+      #   with:
+      #     run_id: ${{ github.event.workflow_run.id }}
+      #     path: ./calculator
+      #     search_artifacts: true
