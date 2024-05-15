@@ -64,6 +64,8 @@ jobs:
           ls
           cd calculator/
           ls
+          cd target/
+          ls
           
           pwd
 
