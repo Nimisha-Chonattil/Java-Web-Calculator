@@ -61,12 +61,11 @@ jobs:
       #     workflow_id="${{ steps.get_workflow_id.outputs.workflow_id }}"
       #     curl -s -O -L -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "htpps://api.github.com/repos/${{ github.repository }}/actions/runs/${workflow_id}/artifacts" | jq -r '.artifacts[] | select(.name == "calculator-artifact") | .archive_download_url' | xargs -I {} curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -o artifact.zip -L "{}"
       - run: |
-          
+          ls
           cd calculator/
           ls
-         
           pwd
 
       - name: Deploy to Tomcat
-        run: curl -v -u ${{secrets.TOMCAT_USR}}:${{secrets.TOMCAT_PWD}} -T /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/calculator/*/*.war http://54.206.111.223:8080/manager/text/deploy?path=/calculator-webapp-war  
+        run: curl -v -u ${{secrets.TOMCAT_USR}}:${{secrets.TOMCAT_PWD}} -T /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/calculator/*.war http://54.206.111.223:8080/manager/text/deploy?path=/calculator-webapp-war  
       # /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/target/calculator.war

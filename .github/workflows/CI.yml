@@ -50,6 +50,9 @@ jobs:
           path: target/*.war
       - run: |
           ls
+          cd target/
+          ls
+          pwd
           
   Upload_to_release:
     needs: Build
