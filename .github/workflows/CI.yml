@@ -73,7 +73,7 @@ jobs:
         uses: thedoctor0/zip-release@0.7.5
         with:
           type: 'zip'
-          filename: 'calculator.zip'
+          filename: 'app.zip'
       - run: |
           ls
           pwd 
@@ -98,8 +98,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./calculator.zip
-          asset_name: calculator-${{ github.run_number}}
+          asset_path: ./app.zip
+          asset_name: web-calculator-${{ github.run_number}}
           asset_content_type: application/zip
 
       
