@@ -67,6 +67,8 @@ jobs:
           
       - run: |
           ls
+          cd calculator/
+          ls
           pwd
 
 
