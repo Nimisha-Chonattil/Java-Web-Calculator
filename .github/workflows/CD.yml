@@ -49,7 +49,7 @@ jobs:
       #     path: .serverless
 
       - run: |
-          unzip "app-${{github.event.inputs.Release_Version}}.zip"
+          unzip "web-calculator-${{github.event.inputs.Release_Version}}.zip"
           ls
           pwd
         
