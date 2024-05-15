@@ -31,6 +31,7 @@ jobs:
         with:
           name: calculator-artifact
           run-id: ${{ github.event.workflow_run.id }}
+          path: ./calculator
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Downloading the release assets
