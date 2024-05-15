@@ -26,26 +26,26 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
 
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: calculator-artifact
-          run-id: ${{ github.event.workflow_run.id }}
-          path: ./calculator
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Downloading the release assets
-      #   uses: robinraju/release-downloader@v1.9
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v4
       #   with:
-      #     repository: ${{ github.repository }}
-      #     tag: v${{ github.event.input.Release_Version }}
-      #     fileName: calculator-${{ github.event.inputs.Release_Version }}.zip
-      #     extract: false
+      #     name: calculator-artifact
+      #     run-id: ${{ github.event.workflow_run.id }}
+      #     path: ./calculator
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      # - run: |
-      #     unzip "app-${{github.event.inputs.Release_Version}}.zip"
-      #     ls
-      #     pwd
+      - name: Downloading the release assets
+        uses: robinraju/release-downloader@v1.9
+        with:
+          repository: ${{ github.repository }}
+          tag: v${{ github.event.input.Release_Version }}
+          fileName: app-${{ github.event.inputs.Release_Version }}.zip
+          extract: false
+
+      - run: |
+          unzip "app-${{github.event.inputs.Release_Version}}.zip"
+          ls
+          pwd
         
       # - name: Download the build artifact from triggered workflow 
       #   uses: dawidd6/action-download-artifact@v2
