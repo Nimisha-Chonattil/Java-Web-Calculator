@@ -64,10 +64,9 @@ jobs:
           ls
           cd calculator/
           ls
-          cd */
-          ls
+          
           pwd
 
       - name: Deploy to Tomcat
         run: curl -v -u ${{secrets.TOMCAT_USR}}:${{secrets.TOMCAT_PWD}} -T /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/calculator/*/*.war http://54.206.111.223:8080/manager/text/deploy?path=/calculator-webapp-war  
-      
+      # /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/target/calculator.war
