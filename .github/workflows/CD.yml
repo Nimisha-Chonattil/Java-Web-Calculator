@@ -14,9 +14,7 @@ on:
       Release_Version:
         type: string
         required: true
-  # workflow_run:
-  #   workflows: Build and Sonar
-  #   types: [completed]
+  
 jobs:
   Deploy:
     name: Deployment
@@ -26,13 +24,6 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
 
-      # - name: Download artifacts
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: calculator-artifact
-      #     run-id: ${{ github.event.workflow_run.id }}
-      #     path: ./calculator
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Downloading the release assets
         uses: robinraju/release-downloader@v1.9
@@ -42,11 +33,6 @@ jobs:
           fileName: web-calculator-${{ github.event.inputs.Release_Version}}.zip
           extract: false
 
-      # - name: Download Release Asset
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: app-${{ github.event.inputs.Release_Version }}
-      #     path: .serverless
 
       - run: |
           unzip "web-calculator-${{github.event.inputs.Release_Version}}.zip"
@@ -62,6 +48,16 @@ jobs:
 
       - name: Deploy to Tomcat
         run: curl -v -u ${{secrets.TOMCAT_USR}}:${{secrets.TOMCAT_PWD}} -T /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/*.war http://54.206.111.223:8080/manager/text/deploy?path=/calculator-webapp-war  
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       # /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/target/calculator.war
 
 
