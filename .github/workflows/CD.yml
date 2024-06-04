@@ -46,7 +46,7 @@ jobs:
       #     pwd
 
       - name: Deploy to Tomcat
-        run: curl -v -u ${{secrets.TOMCAT_USR}}:${{secrets.TOMCAT_PWD}} -T /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/*.war http://54.206.111.223:8080/manager/text/deploy?path=/calculator-webapp-war  
+        run: curl -v -u ${{secrets.TOMCAT_USR}}:${{secrets.TOMCAT_PWD}} -T /home/runner/work/Java-Web-Calculator/Java-Web-Calculator/*.war http://13.236.195.108:8080/manager/text/deploy?path=/calculator-webapp-war  
       
       
       
