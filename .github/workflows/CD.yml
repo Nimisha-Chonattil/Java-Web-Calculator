@@ -5,10 +5,9 @@ on:
       environment: 
         description: Environment for deploy
         required: true
-        default: Dev
+        default: Prod
         type: choice
         options:
-          - Dev
           - Test
           - Prod
       Release_Version:
