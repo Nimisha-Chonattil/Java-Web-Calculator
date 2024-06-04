@@ -5,11 +5,11 @@ on:
       environment: 
         description: Environment for deploy
         required: true
-        default: Prod
+        default: Production
         type: choice
         options:
-          - Test
-          - Prod
+          - Testing
+          - Production
       Release_Version:
         type: string
         required: true
